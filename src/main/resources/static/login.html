@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        .login-form {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .login-form label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .login-form button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: blue;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .login-form button:hover {
+            background-color: #007acc;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-form">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Login</button>
+        </form>
+        <div class="error-message" id="errorMessage"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Define the predefined username and password
+        var predefinedUsername = "dhanush"; 
+        var predefinedPassword = "1234567890"; 
+
+        // Handle login form submission
+        $('#loginForm').submit(function(event) {
+            event.preventDefault();
+            var username = $('#username').val();
+            var password = $('#password').val();
+
+            // Check if the entered username and password match the predefined values
+            if (username === predefinedUsername && password === predefinedPassword) {
+                // Redirect to students.html
+                window.location.href = 'students.html';
+            } else {
+                // Display an error message
+                $('#errorMessage').text('Invalid username or password. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>

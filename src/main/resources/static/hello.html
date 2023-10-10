@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Student Marks</title>
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+	    .head{
+			text-align: center;
+		}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .result {
+            margin-top: 20px;
+            display:none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 class="head">Student Marks</h2>
+    <form id="checkMarksForm">
+        <label for="regNo">Registration No:</label>
+        <input type="text" id="regNo" name="regNo" required>
+        <button type="submit">Check Marks</button>
+    </form>
+
+    <div class="result">
+        <h3 class="head">Student Details</h3>
+        <p><strong>Registration No:</strong> <span id="studentRegNo"></span></p>
+        <p><strong>Name:</strong> <span id="studentName"></span></p>
+        <p><strong>Total:</strong> <span id="studentTotal"></span></p>
+        
+       <!-- <table id="studentTable">
+            <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Marks</th>
+            </tr>
+            
+            </thead>
+            <tbody>
+            <tr>
+				<td>Tamil</td>
+				<td id="studentTamilMark"></td>
+			</tr>
+            </tbody>
+        </table>-->
+        <p><strong>Total Percentage:</strong> <span id="studentPercentage"></span>%</p>
+        <p><strong>Status:</strong> <span id="studentStatus"></span></p>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#checkMarksForm').submit(function(event) {
+            event.preventDefault();
+            var regNo = $('#regNo').val();
+
+            $.ajax({
+                url: '/api/v1/students/' + regNo, 
+                method: 'GET',
+                dataType: 'json',
+                success: function(student) {
+                    // Clear previous results
+                    $('#studentTable tbody').empty();
+
+                    if (student) {
+                        $('#studentRegNo').text(student.regNo);
+                        $('#studentName').text(student.firstName + ' ' + student.lastName);
+						$('#studentTotal').text(student.total)
+                        for (var subject in student.marks) {
+                            var row = '<tr>' +
+                                '<td>' + subject + '</td>' +
+                                '<td>' + student.marks[subject] + '</td>' +
+                                '</tr>';
+
+                            $('#studentTable tbody').append(row);
+                        }
+
+                        $('#studentPercentage').text(student.percentage);
+                        $('#studentStatus').text(student.status);
+                        
+                        $('.result').show();
+                    } else {
+                        alert('Student not found with Registration No: ' + regNo);
+                    }
+                },
+                error: function() {
+                    alert('Failed to check student marks.');
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

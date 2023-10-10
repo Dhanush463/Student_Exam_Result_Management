@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Student</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+    }
+
+    h2 {
+       color: #333;
+       width: 20%;
+       margin: auto;
+    }
+
+       
+    form {
+       max-width: 400px;
+       margin: 0 auto;
+       background-color: #fff;
+       padding: 20px;
+       border-radius: 5px;
+       box-shadow: 0px 0px 10px 0px #888;
+    }
+
+    label {
+       display: block;
+       margin-bottom: 5px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+
+    button[type="button"] {
+        background-color: #007BFF;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+     }
+     .button1{
+		 background-color: orangered !important;
+		 color: #fff;
+		 margin-left:230px; 
+	 }
+	 .button1:hover{
+		 background-color: black;
+	 }
+    </style>
+</head>
+<body>
+    <h2>Add New Student</h2>
+    <form id="studentEditForm">
+        <label for="editRegNo">Register Number:</label>
+        <input type="text" id="editRegNo" name="editRegNo" placeholder="Enter Register Number"><br>
+
+        <label for="editFirstName">First Name:</label>
+        <input type="text" id="editFirstName" name="editFirstName" placeholder="Enter First Name"><br>
+
+        <label for="editLastName">Last Name:</label>
+        <input type="text" id="editLastName" name="editLastName" placeholder="Enter Last Name"><br>
+
+        <label for="editTamilMark">Tamil Mark:</label>
+        <input type="text" id="editTamilMark" name="editTamilMark" placeholder="Enter Tamil Mark"><br>
+
+        <label for="editEnglishMark">English Mark:</label>
+        <input type="text" id="editEnglishMark" name="editEnglishMark" placeholder="Enter English Mark"><br>
+
+        <label for="editMathsMark">Maths Mark:</label>
+        <input type="text" id="editMathsMark" name="editMathsMark" placeholder="Enter Maths Mark"><br>
+
+        <label for="editScienceMark">Science Mark:</label>
+        <input type="text" id="editScienceMark" name="editScienceMark" placeholder="Enter Science Mark"><br>
+
+        <label for="editSocialMark">Social Mark:</label>
+        <input type="text" id="editSocialMark" name="editSocialMark" placeholder="Enter Social Mark"><br>
+
+        <label for="editTotal">Total:</label>
+        <input type="text" id="editTotal" name="editTotal" placeholder="Enter Total"><br>
+
+        <label for="editPercenatage">Percentage:</label>
+        <input type="text" id="editPercenatage" name="editPercenatage" placeholder="Enter Percentage"><br>
+
+        <label for="editStatus">Status:</label>
+        <input type="text" id="editStatus" name="editStatus" placeholder="Enter Status"><br>
+
+        <button type="button" onclick="saveStudent()">Save</button>
+        <button type="button" class="button1"><a href="students.html" style="text-decoration: none;color:#f4f4f4">Home</a></button>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function saveStudent() {
+            var studentData = {
+                regNo: $("#editRegNo").val(),
+                firstName: $("#editFirstName").val(),
+                lastName: $("#editLastName").val(),
+                tamilMark: $("#editTamilMark").val(),
+                englishMark: $("#editEnglishMark").val(),
+                mathsMark: $("#editMathsMark").val(),
+                scienceMark: $("#editScienceMark").val(),
+                socialMark: $("#editSocialMark").val(),
+                total: $("#editTotal").val(),
+                percentage: $("#editPercenatage").val(),
+                status: $("#editStatus").val()
+            };
+           
+            $.ajax({
+                url: '/api/v1/update', // Replace the  URL
+                method: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(studentData),
+                success: function(response) {
+                    alert("Student added successfully");
+                },
+                error: function() {
+                    alert('Failed to add student.');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
